@@ -4,20 +4,25 @@
  * @return {number}
  */
  var removeElement = function(nums, val) {
-  // define a pointer to indicate current position within array
+  // pointer to define current position
   var pointer = 0;
+  // current length
+  var currentLength = nums.length;
 
-  // iterate over nums with while loop if pointer is not at the end of the array
-  while (pointer < nums.length) {
-    // if number equals val,
+  // iterate over nums while pointer < current length
+  while (pointer < currentLength) {
+    // if current number equals val,
     if (nums[pointer] === val) {
-      // remove the number with .splice
-      nums.splice(pointer, 1);
+      // swap elements at pointer and current length - 1
+      nums[pointer] = nums[currentLength - 1];
+      // decrease current length by 1
+      currentLength--;
     } else {
+      // increment pointer
       pointer++;
     }
   }
 
-  // return nums length
-  return nums.length;
+  // return current length
+  return currentLength;
 };
