@@ -9,6 +9,11 @@ Memory Usage: 40.2 MB, less than 14.45% of JavaScript online submissions for Sqr
 // var mySqrt = function(x) {
 //   return Math.floor(x ** .5);
 // };
+
+/*
+Runtime: 92 ms, faster than 83.29% of JavaScript online submissions for Sqrt(x).
+Memory Usage: 39.8 MB, less than 91.92% of JavaScript online submissions for Sqrt(x).
+*/
 var mySqrt = function(x) {
   if (x < 2) return x;
 
