@@ -1,2 +1,2 @@
 # toy-problems
-Leetcode is life
+Leetcode is life!
