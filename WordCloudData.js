@@ -42,7 +42,8 @@ class WordCloudData {
   }
 
   populateWordsToCounts(inputString) {
-    const breakpoints = '.,: ';
+    const breakpoints = '.,:!? ';
+    const connectors = '-';
     let collection = '';
     // iterate over the string
       // if current char is in the breakpoints
@@ -58,30 +59,44 @@ class WordCloudData {
             // add the collection with the similar collection count + 1
             // delete similar collection
         // reset collection
-
+    const store = new Map();
     for (let i = 0; i < inputString.length; i++) {
       const char = inputString[i];
       if (breakpoints.indexOf(char) > -1) continue;
+      if (
+        connectors.indexOf(char) > -1 &&
+        (breakpoints.indexOf(inputString[i - 1]) > -1 || breakpoints.indexOf(inputString[i + 1]) > -1)
+      ) {
+        continue;
+      }
 
       collection += char;
       const nextChar = inputString[i + 1];
       if (breakpoints.indexOf(nextChar) > -1 || !nextChar) {
-        if (!this.wordsToCounts.has(collection.toLowerCase())) {
-          this.wordsToCounts.set(collection.toLowerCase(), {
+        if (!store.has(collection.toLowerCase())) {
+          store.set(collection.toLowerCase(), {
             rawWord: collection,
             count: 1
           });
         } else {
-          const mapObject = this.wordsToCounts.get(collection.toLowerCase());
+          const mapObject = store.get(collection.toLowerCase());
           mapObject.count++;
           if (collection !== mapObject.rawWord) {
             mapObject.rawWord = collection;
           }
-          this.wordsToCounts.set(collection.toLowerCase(), mapObject);
+          store.set(collection.toLowerCase(), mapObject);
         }
         collection = '';
       }
     }
-    console.log(this.wordsToCounts);
+
+    store.forEach((value, key) => {
+      if (key !== value.rawWord) {
+        this.wordsToCounts.set(value.rawWord, value.count);
+        this.wordsToCounts.delete(key);
+      } else {
+        this.wordsToCounts.set(key, value.count);
+      }
+    });
   }
 }
