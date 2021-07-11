@@ -22,6 +22,7 @@ function colorGraph(graph, colors) {
     }
 
     node.neighbors.forEach(neighbor => {
+      if (node === neighbor) throw new Error('error!');
       if (neighbor.color) {
         used.add(neighbor.color);
       } else {
@@ -33,6 +34,7 @@ function colorGraph(graph, colors) {
     uncolored.forEach(node => {
       while (used.has(colors[pointer]) || pointer >= colors.length) pointer++;
       node.color = colors[pointer];
+      used.add(colors[pointer]);
     });
   });
 }
