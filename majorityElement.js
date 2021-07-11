@@ -19,7 +19,7 @@ var majorityElement = function (nums) {
 
 /** time: O(n), space: O(1) */
 var majorityElement = function (nums) {
-  let majCount = 0,
+  let majCount = 1,
     majIndex = 0;
 
   for (let i = 1; i < nums.length; i++) {
@@ -32,6 +32,7 @@ var majorityElement = function (nums) {
 
     if (majCount === 0) {
       majIndex = i;
+      majCount++;
     }
   }
   return nums[majIndex];
@@ -39,3 +40,4 @@ var majorityElement = function (nums) {
 
 console.log(majorityElement([3, 2, 3]));
 console.log(majorityElement([2, 2, 1, 1, 1, 2, 2]));
+console.log(majorityElement([3,3,4]));
