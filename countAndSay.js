@@ -33,6 +33,18 @@ var countAndSay = function (n) {
   return interpreter(2, '1');
 };
 
+var countAndSay = function (n) {
+  if (n === 1) return '1';
+
+  let result = '1',
+    tracker = 2;
+  while (tracker <= n) {
+    result = counter(result);
+    tracker++;
+  }
+  return result;
+};
+
 console.log(countAndSay(2));
 console.log(countAndSay(3));
 console.log(countAndSay(4));
