@@ -1,3 +1,6 @@
+/**
+ * I thought it was O(n^2) but it's actually O(n^3)
+ */
 const find_subarrays = function (arr, target) {
   result = [];
   let left = 0, product = 1;
