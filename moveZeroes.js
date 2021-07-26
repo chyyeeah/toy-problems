@@ -3,7 +3,7 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var moveZeroes = function (nums) {
-  // find zero
+  // find first non-zero from the right side
   let right = nums.length - 1;
   while (nums[right] === 0) {
     right--;
@@ -15,7 +15,7 @@ var moveZeroes = function (nums) {
     if (nums[left] === 0) {
       console.log('hit')
       let p1 = left, p2 = left + 1;
-      while (p2 < right) {
+      while (p2 <= right) {
         nums[p1] = nums[p2];
         p1++;
         p2++;
@@ -25,6 +25,7 @@ var moveZeroes = function (nums) {
     }
     left++;
   }
+  console.log('second', JSON.stringify(nums));
 };
 
 let arr = [0,1,0,3,12];
