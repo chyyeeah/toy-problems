@@ -25,7 +25,30 @@ class MinHeap {
   }
 
   pop() {
-    return this.store.shift();
+    if (this.size() < 1) return null;
+    let n = this.size();
+    [[this.store[0]], this.store[n]] = [[this.store[n]], this.store[0]];
+    const popped = this.store.pop();
+
+    n = 0;
+    let lc = (n * 2) + 1,
+      rc = (n * 2) + 2;
+
+    while (
+      (this.store[lc] && this.store[lc] < this.store[n])
+      || (this.store[rc] && this.store[rc] < this.store[n])
+    ) {
+      if (!this.store[rc] || this.store[lc] < this.store[rc]) {
+        [[this.store[lc]], this.store[n]] = [[this.store[n]], this.store[lc]];
+        n = lc;
+      } else {
+        [[this.store[rc]], this.store[n]] = [[this.store[n]], this.store[rc]];
+        n = rc;
+      }
+      lc = (n * 2) + 1,
+        rc = (n * 2) + 2;
+    }
+    return popped;
   }
 }
 
@@ -57,7 +80,30 @@ class MaxHeap {
   }
 
   pop() {
-    return this.store.shift();
+    if (this.size() < 1) return null;
+    let n = this.size() - 1;
+    [[this.store[0]], this.store[n]] = [[this.store[n]], this.store[0]];
+    const popped = this.store.pop();
+    console.log(popped);
+    n = 0;
+    let lc = (n * 2) + 1,
+      rc = (n * 2) + 2;
+
+    while (
+      (this.store[lc] && this.store[lc] > this.store[n])
+      || (this.store[rc] && this.store[rc] > this.store[n])
+    ) {
+      if (!this.store[rc] || this.store[lc] > this.store[rc]) {
+        [[this.store[lc]], this.store[n]] = [[this.store[n]], this.store[lc]];
+        n = lc;
+      } else {
+        [[this.store[rc]], this.store[n]] = [[this.store[n]], this.store[rc]];
+        n = rc;
+      }
+      lc = (n * 2) + 1,
+        rc = (n * 2) + 2;
+    }
+    return popped;
   }
 }
 
@@ -68,24 +114,24 @@ class MedianOfAStream {
   }
 
   insert_num(num) {
-   if (num <= this.maxHeap.size()) {
-     this.maxHeap.insert(num);
-   } else {
-     this.minHeap.insert(num);
-   }
+    if (num <= this.maxHeap.size()) {
+      this.maxHeap.insert(num);
+    } else {
+      this.minHeap.insert(num);
+    }
 
-   // rebalance
-   if (this.minHeap.size() + 1 < this.maxHeap.size()) {
-    const num = this.maxHeap.pop();
-    this.minHeap.insert(num);
-   }
+    // rebalance
+    if (this.minHeap.size() + 1 < this.maxHeap.size()) {
+      const num = this.maxHeap.pop();
+      this.minHeap.insert(num);
+    }
 
-   if (this.maxHeap.size() < this.minHeap.size()) {
-    const num = this.minHeap.pop();
-    this.maxHeap.insert(num);
-  }
+    if (this.maxHeap.size() < this.minHeap.size()) {
+      const num = this.minHeap.pop();
+      this.maxHeap.insert(num);
+    }
 
-   return;
+    return;
   }
 
   find_median() {
@@ -105,8 +151,9 @@ heaps.insert_num(17);
 heaps.insert_num(43);
 heaps.insert_num(11);
 heaps.insert_num(22);
+// console.log(heaps);
 heaps.insert_num(15);
-console.log(heaps.find_median());
+// console.log(heaps);
 
 // var medianOfAStream = new MedianOfAStream()
 // medianOfAStream.insert_num(3)
