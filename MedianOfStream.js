@@ -26,10 +26,9 @@ class MinHeap {
 
   pop() {
     if (this.size() < 1) return null;
-    let n = this.size();
+    let n = this.size() - 1;
     [[this.store[0]], this.store[n]] = [[this.store[n]], this.store[0]];
     const popped = this.store.pop();
-
     n = 0;
     let lc = (n * 2) + 1,
       rc = (n * 2) + 2;
@@ -84,7 +83,6 @@ class MaxHeap {
     let n = this.size() - 1;
     [[this.store[0]], this.store[n]] = [[this.store[n]], this.store[0]];
     const popped = this.store.pop();
-    console.log(popped);
     n = 0;
     let lc = (n * 2) + 1,
       rc = (n * 2) + 2;
@@ -114,7 +112,7 @@ class MedianOfAStream {
   }
 
   insert_num(num) {
-    if (num <= this.maxHeap.size()) {
+    if (this.maxHeap.size() < 1 || num <= this.maxHeap.peek()) {
       this.maxHeap.insert(num);
     } else {
       this.minHeap.insert(num);
@@ -151,9 +149,9 @@ heaps.insert_num(17);
 heaps.insert_num(43);
 heaps.insert_num(11);
 heaps.insert_num(22);
-// console.log(heaps);
-heaps.insert_num(15);
-// console.log(heaps);
+console.log(heaps);
+// heaps.insert_num(15);
+console.log(heaps.find_median());
 
 // var medianOfAStream = new MedianOfAStream()
 // medianOfAStream.insert_num(3)
