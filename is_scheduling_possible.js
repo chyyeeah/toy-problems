@@ -2,9 +2,9 @@ const is_scheduling_possible = function (tasks, prerequisites) {
   const inDegrees = new Array(tasks).fill(0),
     graph = new Array(tasks).fill(0).map(() => new Array());
 
-  prerequisites.forEach(([task, prereq]) => {
-    inDegrees[prereq]++;
-    graph[task].push(prereq);
+  prerequisites.forEach(([prereq, task]) => {
+    inDegrees[task]++;
+    graph[prereq].push(task);
   });
 
   const sources = [];
