@@ -4,27 +4,34 @@
  * @return {number[]}
  */
 const findOrder = (numCourses, prerequisites) => {
-  // build out a map of all the courses and their prereqs
-  const prereqMap = {};
-  prerequisites.forEach((p) => {
-    const [course, prereq] = p;
-    if (!prereqMap[course]) prereqMap[course] = [];
-    prereqMap[course].push(prereq);
+  const dependencies = new Array(numCourses).fill(0),
+    graph = new Array(numCourses).fill(0).map(() => new Array());
+
+  prerequisites.forEach(([course, prereq]) => {
+    dependencies[course]++;
+    graph[prereq].push(course);
   });
 
-  const allVisited = new Set(),
-    order = [];
+  const sources = [];
+  dependencies.forEach((d, idx) => {
+    if (d === 0) sources.push(idx);
+  });
 
-  const dfs = (c) => {
-    const visited = new Set();
-    allVisited.add(c);
-    visited.add(c);
-    if (!prereqMap[c]) return order.push(c);
+  const order = [];
+  while (sources.length > 0) {
+    const node = sources.shift();
+    order.push(node);
+    graph[node].forEach((course) => {
+      dependencies[course]--;
+      if (dependencies[course] === 0) {
+        sources.push(course);
+      }
+    })
+  }
 
-    prereqMap[c].forEach((prereq) => {
-      dfs(prereq);
-    });
-  };
+  if (order.length !== numCourses) return [];
+
+  return order;
 };
 
 // var findOrder = function (numCourses, prerequisites) {
@@ -83,6 +90,7 @@ const findOrder = (numCourses, prerequisites) => {
 
 // console.log(findOrder(2, [[1, 0]]));
 // console.log(findOrder(4, [[1, 0], [2, 0], [3, 1], [3, 2]]));
-console.log(findOrder(1, []));
+// console.log(findOrder(1, []));
 // console.log(findOrder(4, [[1, 0], [2, 0], [3, 1], [3, 2], [0, 3]]));
 // console.log(findOrder(3, [[1,0]]));
+console.log(findOrder(3, [[1,0],[1,2],[0,1]]));
