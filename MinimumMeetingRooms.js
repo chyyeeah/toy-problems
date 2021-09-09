@@ -14,16 +14,12 @@ const min_meeting_rooms = function (meetings) {
     const current = meetings[i];
     let last = minHeap[minHeap.length - 1];
 
-    if (current.start < last.end) {
-      minHeap.push(current);
-    } else {
-      while (minHeap.length > 0 && current.start >= last.end) {
-        minHeap.pop();
-        last = minHeap[minHeap.length - 1];
-      }
-      minHeap.push(current);
+    while (minHeap.length > 0 && current.start >= last.end) {
+      minHeap.pop();
+      last = minHeap[minHeap.length - 1];
     }
-    minHeap.sort((a, b) => b.end - a.end);
+    minHeap.push(current);
+    if (minHeap.length > 1) minHeap.sort((a, b) => b.end - a.end);
     max = Math.max(max, minHeap.length);
   }
 
