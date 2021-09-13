@@ -56,9 +56,9 @@ const reverse_alternate_k_elements = function (head, k) {
       current.next = head;
       while (n > 0 && current) {
         current = current.next;
-        head = head.next;
         n--;
       }
+      head = current.next;
       canReverse = true;
     }
   }
